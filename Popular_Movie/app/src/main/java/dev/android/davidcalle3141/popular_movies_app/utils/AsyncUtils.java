@@ -49,10 +49,10 @@ public class AsyncUtils extends AsyncTask<URL, Void , String>{
                     mAdapter.notifyDataSetChanged();
                     break;
                 case "trailers":
-                    mAdapter.setMovieTrailers(movieDataString, movie);
+                    MovieJsonUtils.parseMovieTrailerJson(movieDataString,movie);
                     break;
                 case "reviews":
-                    mAdapter.setMovieReviews(movieDataString, movie);
+                    MovieJsonUtils.parseMovieReviewsJson(movieDataString,movie);
                     break;
             }
 
