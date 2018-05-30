@@ -44,4 +44,5 @@ public class DetailActivity extends AppCompatActivity {
         moviePlot.setText(intent.getStringExtra("moviePlot"));
 
     }
+
 }

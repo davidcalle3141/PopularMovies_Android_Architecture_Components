@@ -1,5 +1,8 @@
 package dev.android.davidcalle3141.popular_movies_app.models;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Movie {
     private String movie_name;
     private String image_url;
@@ -7,6 +10,8 @@ public class Movie {
     private String release_date;
     private String rating;
     private String id;
+    private ArrayList<HashMap> trailers;
+    private ArrayList<HashMap> reviews;
 
     public Movie(){
 
@@ -68,5 +73,21 @@ public Movie(String movie_name, String image_url, String release_date, String ra
 
     public String getId(){
         return this.id;
+    }
+
+    public void addTrailer(HashMap trailerUrl){
+        trailers.add(trailerUrl);
+    }
+
+    public ArrayList getTrailers() {
+        return trailers;
+    }
+
+    public void addReview(HashMap review){
+        reviews.add(review);
+    }
+
+    public ArrayList getReviews() {
+        return reviews;
     }
 }
