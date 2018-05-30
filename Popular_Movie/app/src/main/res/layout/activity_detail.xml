@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/detail_movie_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="35sp"
+                android:gravity="center_vertical"
+                android:layout_gravity="start"
+                android:padding="25dp"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@android:color/white"
+
+                />
+            <include layout="@layout/activity_detail_image_and_rating"/>
+
+            <include layout="@layout/activity_detail_synopsys_and_trailer"/>
+
+        </LinearLayout>
+
+
+
+
+
+
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>
