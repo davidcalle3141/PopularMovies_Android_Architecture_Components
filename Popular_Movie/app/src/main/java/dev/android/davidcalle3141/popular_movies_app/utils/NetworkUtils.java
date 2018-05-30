@@ -19,13 +19,13 @@ import static android.content.ContentValues.TAG;
 public class NetworkUtils {
     //should these variables be in a resource file?
     private static final String POPULAR_MOVIES_URL =
-            "https://api.themoviedb.org/3/movie/popular?api_key=********";
+            "https://api.themoviedb.org/3/movie/popular?api_key=*****";
     private static final String HIGHEST_RATED_MOVIES_URL =
-            "http://api.themoviedb.org/3/movie/top_rated?api_key=*******";
+            "http://api.themoviedb.org/3/movie/top_rated?api_key=*****";
     private static final String MOVIE_IMAGE_BASE_URL = "http://image.tmdb.org/t/p/";
 
-    private final static String LANGUAGE_PARAM = "language";
-    private final static String REGION_PARAM = "region";
+    final static private String LANGUAGE_PARAM = "language";
+    final static private String REGION_PARAM = "region";
 
 
 

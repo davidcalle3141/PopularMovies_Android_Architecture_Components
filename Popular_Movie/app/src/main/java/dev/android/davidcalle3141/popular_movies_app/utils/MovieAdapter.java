@@ -37,6 +37,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         movies = MovieJsonUtils.parseMovieJson(JsonMovieString, posterSize);
 
     }
+    public void setMovieReviews(String JsonReviewString, Movie movie){
+        MovieJsonUtils.parseMovieReviewsJson(JsonReviewString, movie);
+    }
+    public void setMovieTrailers(String JsonTrailerString, Movie movie){
+        MovieJsonUtils.parseMovieReviewsJson(JsonTrailerString, movie);
+    }
 
     public ArrayList<Movie> getMovieData(){
         return movies;
@@ -81,7 +87,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         private ImageView img_movie;
 
 
-        public ViewHolder(View view) {
+        private ViewHolder(View view) {
             super(view);
             img_movie = view.findViewById(R.id.image_Iv);
             view.setOnClickListener(this);

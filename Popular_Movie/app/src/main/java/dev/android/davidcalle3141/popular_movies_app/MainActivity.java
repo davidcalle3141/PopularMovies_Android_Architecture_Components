@@ -16,6 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import dev.android.davidcalle3141.popular_movies_app.models.Movie;
+import dev.android.davidcalle3141.popular_movies_app.utils.AsyncUtils;
 import dev.android.davidcalle3141.popular_movies_app.utils.MovieAdapter;
 import dev.android.davidcalle3141.popular_movies_app.utils.MovieJsonUtils;
 import dev.android.davidcalle3141.popular_movies_app.utils.NetworkUtils;
@@ -40,8 +41,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         mRecyclerView.setAdapter(mAdapter);
 
-
-        new MoviesQueryTask().execute(NetworkUtils.popularMoviesUrl("en_Us", "840"));
+        new AsyncUtils(mAdapter,"main").execute(NetworkUtils.popularMoviesUrl("en_Us", "840"));
 
 
 
@@ -65,32 +65,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     }
 
 
-    public class MoviesQueryTask extends AsyncTask<URL, Void, String>{
 
-
-        @Override
-        protected String doInBackground(URL... params) {
-            int i =0;
-            URL url = params[0];
-            try{
-                return NetworkUtils.getResponseFromHttpUrl(url);
-            }catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-        @Override
-        protected void onPostExecute(String moviesString) {
-            super.onPostExecute(moviesString);
-            if(moviesString != null){
-
-                mAdapter.setMovieData(moviesString, "w185");
-                mAdapter.notifyDataSetChanged();
-            }
-        }
-
-
-    }
 
 
 
@@ -104,12 +79,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
         if(id == R.id.action_settings_popular){
-            new MoviesQueryTask().execute(NetworkUtils.popularMoviesUrl("en_Us", "840"));
+            new AsyncUtils(mAdapter,"main").execute(NetworkUtils.popularMoviesUrl("en_Us", "840"));
 
             return true;
         }
         if(id == R.id.action_settings_top){
-            new MoviesQueryTask().execute(NetworkUtils.ratingMoviesUrl("en_Us", "840"));
+            new AsyncUtils(mAdapter,"main").execute(NetworkUtils.ratingMoviesUrl("en_Us", "840"));
 
             return true;
         }
