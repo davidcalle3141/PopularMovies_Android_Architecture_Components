@@ -3,11 +3,15 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
-    <ScrollView
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fadeScrollbars="true"
+        
        >
 
         <LinearLayout
@@ -27,18 +31,18 @@
                 android:textColor="@android:color/white"
 
                 />
-            <include layout="@layout/activity_detail_image_and_rating"/>
 
-            <include layout="@layout/activity_detail_synopsys_and_trailer"/>
+
+
+                <include layout="@layout/activity_detail_image_and_details"/>
+
+                <include layout="@layout/activity_detail_synopsys_and_trailers"/>
+
+                <include layout="@layout/activity_detail_reviews"/>
 
         </LinearLayout>
 
-
-
-
-
-
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 
 </android.support.constraint.ConstraintLayout>

@@ -2,7 +2,6 @@ package dev.android.davidcalle3141.popular_movies_app;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -10,15 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 import dev.android.davidcalle3141.popular_movies_app.models.Movie;
 import dev.android.davidcalle3141.popular_movies_app.utils.AsyncUtils;
-import dev.android.davidcalle3141.popular_movies_app.utils.MovieAdapter;
-import dev.android.davidcalle3141.popular_movies_app.utils.MovieJsonUtils;
+import dev.android.davidcalle3141.popular_movies_app.adapters.MovieAdapter;
 import dev.android.davidcalle3141.popular_movies_app.utils.NetworkUtils;
 
 import static android.content.ContentValues.TAG;
@@ -61,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         intent.putExtra("movieReleaseDate", mAdapter.getMovieData().get(position).getRelease_date());
         intent.putExtra("movieRating", mAdapter.getMovieData().get(position).getRating());
         intent.putExtra("moviePlot", mAdapter.getMovieData().get(position).getPlot_synopsis());
+        intent.putExtra("movieID", mAdapter.getMovieData().get(position).getId());
         startActivity(intent);
     }
 

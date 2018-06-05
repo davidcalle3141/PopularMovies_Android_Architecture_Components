@@ -18,14 +18,22 @@ import static android.content.ContentValues.TAG;
 
 public class NetworkUtils {
     //should these variables be in a resource file?
+    private static final String KEY = "a89cf665e1b42d5195f7c243d3d46a9f";
+
     private static final String POPULAR_MOVIES_URL =
-            "https://api.themoviedb.org/3/movie/popular?api_key=*****";
+            "https://api.themoviedb.org/3/movie/popular";
     private static final String HIGHEST_RATED_MOVIES_URL =
-            "http://api.themoviedb.org/3/movie/top_rated?api_key=*****";
+            "http://api.themoviedb.org/3/movie/top_rated?";
+    private static final String MOVIE_REVIEWS_URL =
+            "https://api.themoviedb.org/3/movie";
     private static final String MOVIE_IMAGE_BASE_URL = "http://image.tmdb.org/t/p/";
+
+
 
     final static private String LANGUAGE_PARAM = "language";
     final static private String REGION_PARAM = "region";
+    final static private String API_KEY = "api_key";
+
 
 
 
@@ -49,6 +57,7 @@ public class NetworkUtils {
     }
     public static URL popularMoviesUrl(String language, String region){
         Uri buildUri = Uri.parse(POPULAR_MOVIES_URL).buildUpon()
+                .appendQueryParameter(API_KEY, KEY)
                 .appendQueryParameter(LANGUAGE_PARAM, language)
                 .appendQueryParameter(REGION_PARAM, region)
                 .build();
@@ -67,6 +76,7 @@ public class NetworkUtils {
 
     public static URL ratingMoviesUrl(String language, String region){
         Uri buildUri = Uri.parse(HIGHEST_RATED_MOVIES_URL).buildUpon()
+                .appendQueryParameter(API_KEY, KEY)
                 .appendQueryParameter(LANGUAGE_PARAM, language)
                 .appendQueryParameter(REGION_PARAM, region)
                 .build();
@@ -81,6 +91,24 @@ public class NetworkUtils {
         Log.v(TAG,"top rated movie URI" + url);
         return url;
 
+    }
+
+    //https://api.themoviedb.org/3/movie/{movie_id}/reviews?api_key=<<api_key>>&language=en-US&page=1
+    public static URL movieReviewsUrl(String movie_id, String language, String region){
+        Uri buildUri = Uri.parse(MOVIE_REVIEWS_URL).buildUpon()
+                .appendPath(movie_id)
+                .appendPath("reviews")
+                .appendQueryParameter(API_KEY, KEY)
+                .appendQueryParameter(LANGUAGE_PARAM, language)
+                .appendQueryParameter(REGION_PARAM, region)
+                .build();
+        URL url = null;
+        try {
+            url = new URL(buildUri.toString());
+        }catch (MalformedURLException e){
+            e.printStackTrace();
+        }
+        return url;
     }
 
 

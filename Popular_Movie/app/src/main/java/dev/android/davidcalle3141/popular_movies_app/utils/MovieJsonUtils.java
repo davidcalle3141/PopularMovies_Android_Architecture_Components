@@ -63,7 +63,7 @@ public final class MovieJsonUtils {
                 trailer.put("key", results.getJSONObject(i).getString("key"));
                 trailer.put("name", results.getJSONObject(i).getString("name"));
                 trailer.put("id", results.getJSONObject(i).getString("id"));
-                movie.addTrailer(trailer);
+               // movie.addTrailer(trailer);
                 trailer.clear();
 
 
@@ -77,28 +77,29 @@ public final class MovieJsonUtils {
 
     }
 
-    public static void parseMovieReviewsJson(String json, Movie movie){
+    public static ArrayList<HashMap<String, String>> parseMovieReviewsJson(String json){
         try {
-            HashMap<String, String> review = new HashMap<>();
+            ArrayList<HashMap <String,String>> MovieReviews = new ArrayList<HashMap <String,String>>();
+            HashMap<String, String> review;
             JSONObject reviewsJson = new JSONObject(json);
             JSONArray results = reviewsJson.getJSONArray("results");
 
 
             for(int i = 0; i < results.length(); i++){
+                review = new HashMap<>();
                 review.put("author", results.getJSONObject(i).getString("author"));
                 review.put("content", results.getJSONObject(i).getString("content"));
                 review.put("id", results.getJSONObject(i).getString("id"));
                 review.put("url", results.getJSONObject(i).getString("url"));
-                movie.addReview(review);
-                review.clear();
+                MovieReviews.add(review);
             }
 
-
-
+            return MovieReviews;
         }catch (JSONException e){
             e.printStackTrace();
         }
 
+        return null;
     }
 
 

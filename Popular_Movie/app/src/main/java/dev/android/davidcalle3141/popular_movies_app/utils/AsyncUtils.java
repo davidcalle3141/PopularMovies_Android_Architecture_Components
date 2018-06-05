@@ -4,27 +4,25 @@ import android.os.AsyncTask;
 
 import java.net.URL;
 
+import dev.android.davidcalle3141.popular_movies_app.adapters.MovieAdapter;
+import dev.android.davidcalle3141.popular_movies_app.adapters.ReviewsAdapter;
 import dev.android.davidcalle3141.popular_movies_app.models.Movie;
 
 public class AsyncUtils extends AsyncTask<URL, Void , String>{
-    private MovieAdapter mAdapter;
+    private MovieAdapter mMovieAdapter;
+    private ReviewsAdapter mReviewsAdapter;
     private String operation;
-    private Movie movie = null;
 
     public AsyncUtils(MovieAdapter mAdapter, String operation){
-        this.mAdapter = mAdapter;
+        this.mMovieAdapter = mAdapter;
         this.operation = operation;
     }
 
-    public AsyncUtils(MovieAdapter mAdapter, String operation, Movie movie){
-        this.mAdapter = mAdapter;
+    public AsyncUtils(ReviewsAdapter mReviewsAdapter, String operation){
+        this.mReviewsAdapter = mReviewsAdapter;
         this.operation = operation;
-        this.movie = movie;
     }
 
-    public void updateOperation(String operation){
-        this.operation = operation;
-    }
 
 
 
@@ -45,14 +43,15 @@ public class AsyncUtils extends AsyncTask<URL, Void , String>{
         if(movieDataString != null){
             switch (operation){
                 case "main":
-                    mAdapter.setMovieData(movieDataString, "w185");
-                    mAdapter.notifyDataSetChanged();
+                    mMovieAdapter.setMovieData(movieDataString, "w185");
+                    mMovieAdapter.notifyDataSetChanged();
                     break;
                 case "trailers":
-                    MovieJsonUtils.parseMovieTrailerJson(movieDataString,movie);
+
                     break;
                 case "reviews":
-                    MovieJsonUtils.parseMovieReviewsJson(movieDataString,movie);
+                    mReviewsAdapter.setMovieReviews(movieDataString);
+                    mReviewsAdapter.notifyDataSetChanged();
                     break;
             }
 

@@ -1,4 +1,4 @@
-package dev.android.davidcalle3141.popular_movies_app.utils;
+package dev.android.davidcalle3141.popular_movies_app.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import dev.android.davidcalle3141.popular_movies_app.R;
 import dev.android.davidcalle3141.popular_movies_app.models.Movie;
+import dev.android.davidcalle3141.popular_movies_app.utils.MovieJsonUtils;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     private ArrayList<Movie> movies;
@@ -49,7 +50,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activity_main_row_layout, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.rv_main_row_layout, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -57,7 +58,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
 
-            Picasso.with(context).load( movies.get(i).getImage_url()).into(viewHolder.img_movie);
+        Picasso.with(context).load( movies.get(i).getImage_url()).into(viewHolder.img_movie);
 
 
 
@@ -69,6 +70,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         return movies.size();
 
     }
+
+
+
+
+
+
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView img_movie;

@@ -10,8 +10,8 @@ public class Movie {
     private String release_date;
     private String rating;
     private String id;
-    private ArrayList<HashMap> trailers;
-    private ArrayList<HashMap> reviews;
+    private ArrayList<HashMap<String, String>> trailers;
+    private ArrayList<HashMap<String, String>> reviews;
 
     public Movie(){
 
@@ -75,19 +75,4 @@ public Movie(String movie_name, String image_url, String release_date, String ra
         return this.id;
     }
 
-    public void addTrailer(HashMap trailerUrl){
-        trailers.add(trailerUrl);
-    }
-
-    public ArrayList getTrailers() {
-        return trailers;
-    }
-
-    public void addReview(HashMap review){
-        reviews.add(review);
-    }
-
-    public ArrayList getReviews() {
-        return reviews;
-    }
 }

@@ -1,21 +1,33 @@
 
 package dev.android.davidcalle3141.popular_movies_app;
 
-        import android.content.Context;
+import android.content.Context;
         import android.content.Intent;
         import android.os.Bundle;
         import android.support.annotation.Nullable;
         import android.support.v7.app.AppCompatActivity;
-        import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
         import android.widget.ImageView;
         import android.widget.TextView;
 
         import com.squareup.picasso.Picasso;
 
-        import static android.content.ContentValues.TAG;
+
+import dev.android.davidcalle3141.popular_movies_app.adapters.ReviewsAdapter;
+import dev.android.davidcalle3141.popular_movies_app.utils.AsyncUtils;
+import dev.android.davidcalle3141.popular_movies_app.utils.NetworkUtils;
+
+import static android.content.ContentValues.TAG;
 
 public class DetailActivity extends AppCompatActivity {
+    private RecyclerView mReviewRV;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private ReviewsAdapter mReviewAdapter;
+
     Context context;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,8 +37,26 @@ public class DetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if(intent == null){
             Log.v(TAG,"detail activity closed on error null intent");
+            return;
         }
+
         populateUI(intent, context);
+
+
+        mReviewRV = findViewById(R.id.review_RecyclerView);
+        mReviewRV.setNestedScrollingEnabled(false);
+        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mReviewRV.setLayoutManager(mLayoutManager);
+        mReviewAdapter = new ReviewsAdapter(getApplicationContext());
+        mReviewRV.setAdapter(mReviewAdapter);
+
+        new AsyncUtils(mReviewAdapter,"reviews")
+                .execute(NetworkUtils.movieReviewsUrl(intent.getStringExtra("movieID"),"en_Us", "840"));
+
+
+
+
+
     }
 
     private void populateUI(Intent intent, Context context) {

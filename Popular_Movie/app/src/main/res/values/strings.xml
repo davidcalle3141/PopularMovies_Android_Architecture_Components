@@ -5,4 +5,5 @@
     <string name="rating_description">Ratings</string>
     <string name="release_date_description">Release Date</string>
     <string name="trailers">Trailers:</string>
+    <string name="reviews">Reviews:</string>
 </resources>
