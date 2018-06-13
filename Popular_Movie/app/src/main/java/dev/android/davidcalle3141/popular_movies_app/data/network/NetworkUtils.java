@@ -1,4 +1,4 @@
-package dev.android.davidcalle3141.popular_movies_app.utils;
+package dev.android.davidcalle3141.popular_movies_app.data.network;
 
 
 import android.content.Context;
@@ -24,9 +24,11 @@ public class NetworkUtils {
             "https://api.themoviedb.org/3/movie/popular";
     private static final String HIGHEST_RATED_MOVIES_URL =
             "http://api.themoviedb.org/3/movie/top_rated?";
-    private static final String MOVIE_REVIEWS_URL =
+    private static final String MOVIE_REVIEWS_AND_TRAILERS_BASE_URL =
             "https://api.themoviedb.org/3/movie";
-    private static final String MOVIE_IMAGE_BASE_URL = "http://image.tmdb.org/t/p/";
+    private static final String MOVIE_IMAGE_BASE_URL =
+            "http://image.tmdb.org/t/p/";
+
 
 
 
@@ -93,11 +95,30 @@ public class NetworkUtils {
 
     }
 
+
+
     //https://api.themoviedb.org/3/movie/{movie_id}/reviews?api_key=<<api_key>>&language=en-US&page=1
     public static URL movieReviewsUrl(String movie_id, String language, String region){
-        Uri buildUri = Uri.parse(MOVIE_REVIEWS_URL).buildUpon()
+        Uri buildUri = Uri.parse(MOVIE_REVIEWS_AND_TRAILERS_BASE_URL).buildUpon()
                 .appendPath(movie_id)
                 .appendPath("reviews")
+                .appendQueryParameter(API_KEY, KEY)
+                .appendQueryParameter(LANGUAGE_PARAM, language)
+                .appendQueryParameter(REGION_PARAM, region)
+                .build();
+        URL url = null;
+        try {
+            url = new URL(buildUri.toString());
+        }catch (MalformedURLException e){
+            e.printStackTrace();
+        }
+        return url;
+    }
+
+    public static URL movieTrailerssUrl(String movie_id, String language, String region){
+        Uri buildUri = Uri.parse(MOVIE_REVIEWS_AND_TRAILERS_BASE_URL).buildUpon()
+                .appendPath(movie_id)
+                .appendPath("videos")
                 .appendQueryParameter(API_KEY, KEY)
                 .appendQueryParameter(LANGUAGE_PARAM, language)
                 .appendQueryParameter(REGION_PARAM, region)

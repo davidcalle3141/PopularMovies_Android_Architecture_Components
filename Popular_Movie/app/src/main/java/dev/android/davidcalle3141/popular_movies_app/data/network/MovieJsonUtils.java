@@ -1,4 +1,4 @@
-package dev.android.davidcalle3141.popular_movies_app.utils;
+package dev.android.davidcalle3141.popular_movies_app.data.network;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -6,31 +6,32 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-import dev.android.davidcalle3141.popular_movies_app.models.Movie;
+import dev.android.davidcalle3141.popular_movies_app.data.database.MovieEntry;
 
 public final class MovieJsonUtils {
 
 
-    public static ArrayList<Movie> parseMovieJson(String json, String posterSize) {
+    MovieResponse parseMovieJson(String json, Boolean sortingPopular, Boolean sortingRating) {
 
 
         try {
             JSONObject movie = new JSONObject(json);
             JSONArray results = movie.getJSONArray("results");
-            ArrayList<Movie> movieModel = new ArrayList<>();
-            String posterBaseUrl = "http://image.tmdb.org/t/p/"+posterSize+"/";
+            List<MovieEntry> movieModel = new ArrayList<>();
+            String posterBaseUrl = "http://image.tmdb.org/t/p/"+ "w185" +"/";
 
 
             for(int i = 0; i < results.length(); i++){
-                movieModel.add(new Movie());
+                movieModel.add(new MovieEntry());
                 movieModel.get(i).setImage_url(
                         posterBaseUrl+results.getJSONObject(i).getString("poster_path")
                 );
                 movieModel.get(i).setMovie_name(
                         results.getJSONObject(i).getString("title")
                 );
-                movieModel.get(i).setId(
+                movieModel.get(i).setMovieID(
                         results.getJSONObject(i).getString("id")
                 );
                 movieModel.get(i).setPlot_synopsis(
@@ -42,44 +43,50 @@ public final class MovieJsonUtils {
                 movieModel.get(i).setRelease_date(
                         results.getJSONObject(i).getString("release_date")
                 );
+                movieModel.get(i).setPopularity(
+                        results.getJSONObject(i).getString("popularity")
+                );
+
+                movieModel.get(i).setSortingPopular(sortingPopular);
+                movieModel.get(i).setSortingRating(sortingRating);
 
             }
 
 
-            return movieModel;
+            return new MovieResponse(movieModel);
         }catch (JSONException e){
             e.printStackTrace();
         }
         return null;
     }
-    public static void parseMovieTrailerJson(String json, Movie movie){
+    public static ArrayList<HashMap<String, String>> parseMovieTrailerJson(String json){
         try {
-            HashMap<String,String> trailer = new HashMap<>();
+            ArrayList<HashMap <String,String>> TrailerReviews = new ArrayList<>();
+            HashMap<String, String> trailer;
             JSONObject trailersJson = new JSONObject(json);
             JSONArray results = trailersJson.getJSONArray("results");
 
 
             for(int i = 0; i < results.length(); i++){
+                trailer = new HashMap<>();
                 trailer.put("key", results.getJSONObject(i).getString("key"));
                 trailer.put("name", results.getJSONObject(i).getString("name"));
                 trailer.put("id", results.getJSONObject(i).getString("id"));
-               // movie.addTrailer(trailer);
-                trailer.clear();
-
-
+                TrailerReviews.add(trailer);
             }
 
 
-
+        return TrailerReviews;
         }catch (JSONException e){
             e.printStackTrace();
         }
+        return null;
 
     }
 
     public static ArrayList<HashMap<String, String>> parseMovieReviewsJson(String json){
         try {
-            ArrayList<HashMap <String,String>> MovieReviews = new ArrayList<HashMap <String,String>>();
+            ArrayList<HashMap <String,String>> MovieReviews = new ArrayList<>();
             HashMap<String, String> review;
             JSONObject reviewsJson = new JSONObject(json);
             JSONArray results = reviewsJson.getJSONArray("results");

@@ -7,7 +7,7 @@
         android:orderInCategory="100"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/action_settings_top"
+        android:id="@+id/action_settings_sortRating"
         android:title="@string/ratings"
         android:orderInCategory="100"
         app:showAsAction="never"/>

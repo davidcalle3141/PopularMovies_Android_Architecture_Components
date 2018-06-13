@@ -1,31 +1,37 @@
-package dev.android.davidcalle3141.popular_movies_app.models;
+package dev.android.davidcalle3141.popular_movies_app.data.database;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
-public class Movie {
+@Entity
+public class MainMoviesRatingEntry {
     private String movie_name;
     private String image_url;
     private String plot_synopsis;
     private String release_date;
     private String rating;
+    private Boolean sortingPopular;
+    private Boolean sortingRating;
+    @PrimaryKey
     private String id;
-    private ArrayList<HashMap<String, String>> trailers;
-    private ArrayList<HashMap<String, String>> reviews;
 
-    public Movie(){
+    public MainMoviesRatingEntry(){
 
     }
 
-public Movie(String movie_name, String image_url, String release_date, String rating, String plot_synopsis, String id){
+    public MainMoviesRatingEntry(String movie_name, String image_url, String release_date, String rating, String plot_synopsis, Boolean sortingPopular,Boolean sortingRating, String id){
         this.movie_name = movie_name;
         this.image_url = image_url;
         this.release_date = release_date;
         this.rating = rating;
         this.plot_synopsis = plot_synopsis;
+        this.sortingPopular = sortingPopular;
+        this.sortingRating = sortingRating;
         this.id = id;
 
-}
+
+    }
 
     public String getMovie_name() {
         return movie_name;
@@ -67,12 +73,25 @@ public Movie(String movie_name, String image_url, String release_date, String ra
         this.rating = rating;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getId(){
         return this.id;
     }
 
+    public void setId(String id) { this.id = id; }
+
+    public Boolean getSortingPopular() {
+        return sortingPopular;
+    }
+
+    public void setSortingPopular(Boolean sortingPopular) {
+        this.sortingPopular = sortingPopular;
+    }
+
+    public Boolean getSortingRating() {
+        return sortingRating;
+    }
+
+    public void setSortingRating(Boolean sortingRating) {
+        this.sortingRating = sortingRating;
+    }
 }

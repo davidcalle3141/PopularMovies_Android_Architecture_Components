@@ -10,20 +10,25 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
-
 import java.util.ArrayList;
+import java.util.List;
 
 import dev.android.davidcalle3141.popular_movies_app.R;
-import dev.android.davidcalle3141.popular_movies_app.models.Movie;
-import dev.android.davidcalle3141.popular_movies_app.utils.MovieJsonUtils;
+import dev.android.davidcalle3141.popular_movies_app.data.database.MovieEntry;
+import dev.android.davidcalle3141.popular_movies_app.data.network.MovieJsonUtils;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
-    private ArrayList<Movie> movies;
+    private List<MovieEntry> movies;
     private Context context;
+    private String JsonMovieString;
     private final MovieAdapterOnClickHandler mClickHandler;
 
+    public void addMoviesList(List<MovieEntry> mainMoviesEntries) {
+        movies = mainMoviesEntries;
+    }
+
     public interface MovieAdapterOnClickHandler {
-        void onItemClick(int position);    }
+        void onItemClick(int position);}
 
 
     public MovieAdapter(MovieAdapterOnClickHandler clickHandler, Context context){
@@ -34,13 +39,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
 
 
-    public void setMovieData(String JsonMovieString, String posterSize){
-        movies = MovieJsonUtils.parseMovieJson(JsonMovieString, posterSize);
 
+
+    public String getJsonMovieString(){
+        return JsonMovieString;
     }
-
-
-    public ArrayList<Movie> getMovieData(){
+    public List<MovieEntry> getMovieData(){
         return movies;
     }
 

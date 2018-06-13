@@ -14,52 +14,45 @@ import java.util.HashMap;
 import dev.android.davidcalle3141.popular_movies_app.R;
 import dev.android.davidcalle3141.popular_movies_app.data.network.MovieJsonUtils;
 
-public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder>{
-    private Context context;
-    private ArrayList<HashMap <String,String>> mMovieReviews;
+public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.ViewHolder>{
+    private final Context context;
+    private ArrayList<HashMap<String,String>> mTrailers;
 
-    public ReviewsAdapter(Context context){
+
+    public TrailersAdapter(Context context){
         this.context = context;
-        mMovieReviews = new ArrayList<>();
+        mTrailers = new ArrayList<>();
     }
 
-    public void setMovieReviews(String JsonReviewString){
-        mMovieReviews= MovieJsonUtils.parseMovieReviewsJson(JsonReviewString);
+    public void setMovieTrailers(String JsonTrailerString){
+        mTrailers = MovieJsonUtils.parseMovieTrailerJson(JsonTrailerString);
     }
-
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.rv_detail_reviews_row, viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.rv_detail_trailers_row, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String name = mMovieReviews.get(position).get("author");
-        String comment = mMovieReviews.get(position).get("content");
-
-        holder.review_name.setText(name);
-        holder.review_comment.setText(comment);
-
-
+        position ++;
+        String name = "Trailer "+ position ;
+        holder.trailer_name.setText(name);
     }
 
     @Override
     public int getItemCount() {
-        return mMovieReviews.size();
+        return mTrailers.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView review_name;
-        private TextView review_comment;
+        private TextView trailer_name;
 
 
         private ViewHolder(View view) {
             super(view);
-            review_name = view.findViewById(R.id.review_name);
-            review_comment = view.findViewById(R.id.review_comment);
+            trailer_name = view.findViewById(R.id.trailer_name);
 
         }
 
