@@ -6,9 +6,9 @@ import android.content.Intent;
 
 import dev.android.davidcalle3141.popular_movies_app.utilities.InjectorUtils;
 
-public class SyncIntentService extends IntentService{
-    public SyncIntentService(){
-        super("SyncIntentService");
+public class SyncIntentServiceFetchMovies extends IntentService{
+    public SyncIntentServiceFetchMovies(){
+        super("SyncIntentServiceFetchMovies");
     }
 
     @Override
@@ -17,4 +17,6 @@ public class SyncIntentService extends IntentService{
                 InjectorUtils.provideNetworkDataSource(this.getApplicationContext());
         networkDataSource.fetchMovies();
     }
+
+
 }

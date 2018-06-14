@@ -10,21 +10,22 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import dev.android.davidcalle3141.popular_movies_app.R;
-import dev.android.davidcalle3141.popular_movies_app.data.network.MovieJsonUtils;
 
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder>{
     private Context context;
-    private ArrayList<HashMap <String,String>> mMovieReviews;
+    private List<HashMap<String, String>> mMovieReviews;
 
     public ReviewsAdapter(Context context){
         this.context = context;
         mMovieReviews = new ArrayList<>();
     }
 
-    public void setMovieReviews(String JsonReviewString){
-        mMovieReviews= MovieJsonUtils.parseMovieReviewsJson(JsonReviewString);
+    public void setMovieReviews(List<HashMap<String, String>> reviews){
+        int b = 0;
+        mMovieReviews= reviews;
     }
 
 

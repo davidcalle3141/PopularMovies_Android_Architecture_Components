@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Entity
 public class MovieEntry {
@@ -23,6 +24,8 @@ public class MovieEntry {
     private String movieID;
     @PrimaryKey(autoGenerate = true)
     private int id;
+
+
 
 
     public MovieEntry(String movie_name, String image_url,
@@ -133,4 +136,6 @@ public class MovieEntry {
     public void setMovieID(String movieID) {
         this.movieID = movieID;
     }
+
+
 }

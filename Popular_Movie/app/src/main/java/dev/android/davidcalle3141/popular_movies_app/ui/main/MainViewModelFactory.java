@@ -4,13 +4,13 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
-import dev.android.davidcalle3141.popular_movies_app.data.PopularMoviesRepository;
+import dev.android.davidcalle3141.popular_movies_app.data.PopularMoviesRepo;
 
 public class MainViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
-    private final PopularMoviesRepository mRepository;
+    private final PopularMoviesRepo mRepository;
 
-    public MainViewModelFactory(PopularMoviesRepository repository) {
+    public MainViewModelFactory(PopularMoviesRepo repository) {
         this.mRepository = repository;
     }
 

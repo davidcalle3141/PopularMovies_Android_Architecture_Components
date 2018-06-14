@@ -8,7 +8,7 @@ import dev.android.davidcalle3141.popular_movies_app.data.database.MovieEntry;
 
 public class MovieResponse {
 
-    @NonNull
+
     private final List<MovieEntry> mMovieEntries;
 
     MovieResponse(@NonNull final List<MovieEntry> movieEntries){

@@ -10,22 +10,33 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import dev.android.davidcalle3141.popular_movies_app.R;
 import dev.android.davidcalle3141.popular_movies_app.data.network.MovieJsonUtils;
 
 public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.ViewHolder>{
     private final Context context;
-    private ArrayList<HashMap<String,String>> mTrailers;
+    private final TrailerAdapterOnClickHandler mClickHandler;
+    private List<HashMap<String,String>> mTrailers;
 
 
-    public TrailersAdapter(Context context){
+
+    public TrailersAdapter(TrailerAdapterOnClickHandler clickHandler, Context context){
         this.context = context;
+        this.mClickHandler = clickHandler;
         mTrailers = new ArrayList<>();
     }
+    public String getYoutubeLink(int position){
+        return mTrailers.get(position).get("key");
+    }
 
-    public void setMovieTrailers(String JsonTrailerString){
-        mTrailers = MovieJsonUtils.parseMovieTrailerJson(JsonTrailerString);
+    public interface TrailerAdapterOnClickHandler{
+        void onItemClick(int position);
+    }
+
+    public void setMovieTrailers(List<HashMap<String, String>> trailers){
+        mTrailers= trailers;
     }
     @NonNull
     @Override
@@ -46,16 +57,22 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.ViewHo
         return mTrailers.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView trailer_name;
 
 
         private ViewHolder(View view) {
             super(view);
             trailer_name = view.findViewById(R.id.trailer_name);
+            view.setOnClickListener(this);
 
         }
 
 
+        @Override
+        public void onClick(View v) {
+            int adapterPosition = getAdapterPosition();
+            mClickHandler.onItemClick(adapterPosition);
+        }
     }
 }

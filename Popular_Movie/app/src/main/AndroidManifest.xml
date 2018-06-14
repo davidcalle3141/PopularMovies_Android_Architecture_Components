@@ -20,7 +20,9 @@
         </activity>
         <activity android:name=".ui.detail.DetailActivity" />
 
-        <service android:name=".data.network.SyncIntentService" />
+        <service android:name=".data.network.SyncIntentServiceFetchMovies" />
+
+        <activity android:name=".ui.favorites.FavoritesActivity"></activity>
     </application>
 
 </manifest>

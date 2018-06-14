@@ -36,7 +36,9 @@
 
                 <include layout="@layout/activity_detail_image_and_details"/>
 
-                <include layout="@layout/activity_detail_synopsys_and_trailers"/>
+                <include layout="@layout/activity_detail_synopsys"/>
+
+                <include layout="@layout/activity_detail_trailers"/>
 
                 <include layout="@layout/activity_detail_reviews"/>
 

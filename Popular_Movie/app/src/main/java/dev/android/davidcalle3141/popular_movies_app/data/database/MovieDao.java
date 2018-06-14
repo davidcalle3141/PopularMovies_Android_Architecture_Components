@@ -22,12 +22,15 @@ public interface MovieDao {
     @Query("SELECT * FROM MovieEntry WHERE sortingRating = 1 ORDER BY rating DESC")
     LiveData<List<MovieEntry>> loadRatingSortedMovies();
 
+    @Query("SELECT * FROM MovieEntry WHERE id = :movieID")
+    LiveData<MovieEntry> loadMovieEntry(int movieID);
 
     @Insert
-    void insertMovie(MovieEntry movie);
+    void insertFavorite(FavoritesEntry newFavorite);
 
     @Insert
     void bulkInsert(List<MovieEntry> newMoviesFromNetwork);
+
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateMovie(MovieEntry movie);
@@ -35,7 +38,12 @@ public interface MovieDao {
     @Delete
     void deleteMovie(MovieEntry movie);
 
+    @Delete
+    void deleteFavorite(FavoritesEntry favoritesEntry);
+
 
     @Query("DELETE  FROM MovieEntry")
     void deleteMovies();
+
+
 }

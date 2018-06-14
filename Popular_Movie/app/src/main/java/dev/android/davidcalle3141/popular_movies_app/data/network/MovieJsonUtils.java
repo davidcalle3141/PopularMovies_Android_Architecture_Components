@@ -59,9 +59,9 @@ public final class MovieJsonUtils {
         }
         return null;
     }
-    public static ArrayList<HashMap<String, String>> parseMovieTrailerJson(String json){
+    ReviewsAndTrailersResponse parseMovieTrailerJson(String json){
         try {
-            ArrayList<HashMap <String,String>> TrailerReviews = new ArrayList<>();
+            List<HashMap<String, String>> TrailerReviews = new ArrayList<>();
             HashMap<String, String> trailer;
             JSONObject trailersJson = new JSONObject(json);
             JSONArray results = trailersJson.getJSONArray("results");
@@ -76,7 +76,7 @@ public final class MovieJsonUtils {
             }
 
 
-        return TrailerReviews;
+        return new ReviewsAndTrailersResponse(TrailerReviews);
         }catch (JSONException e){
             e.printStackTrace();
         }
@@ -84,9 +84,9 @@ public final class MovieJsonUtils {
 
     }
 
-    public static ArrayList<HashMap<String, String>> parseMovieReviewsJson(String json){
+    ReviewsAndTrailersResponse parseMovieReviewsJson(String json){
         try {
-            ArrayList<HashMap <String,String>> MovieReviews = new ArrayList<>();
+            List<HashMap<String, String>> MovieReviews = new ArrayList<>();
             HashMap<String, String> review;
             JSONObject reviewsJson = new JSONObject(json);
             JSONArray results = reviewsJson.getJSONArray("results");
@@ -101,7 +101,7 @@ public final class MovieJsonUtils {
                 MovieReviews.add(review);
             }
 
-            return MovieReviews;
+            return new ReviewsAndTrailersResponse(MovieReviews);
         }catch (JSONException e){
             e.printStackTrace();
         }

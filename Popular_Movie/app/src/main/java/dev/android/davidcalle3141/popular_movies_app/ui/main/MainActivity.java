@@ -61,7 +61,13 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     private void launchDetailActivity(int position){
         Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra("movieID", mMovieAdapter.getMovieData().get(position).getId());
+        intent.putExtra("moviePoster", mMovieAdapter.getMovieData().get(position).getImage_url());
+        intent.putExtra("movieName", mMovieAdapter.getMovieData().get(position).getMovie_name());
+        intent.putExtra("movieReleaseDate", mMovieAdapter.getMovieData().get(position).getRelease_date());
+        intent.putExtra("movieRating", mMovieAdapter.getMovieData().get(position).getRating());
+        intent.putExtra("moviePlot", mMovieAdapter.getMovieData().get(position).getPlot_synopsis());
+        intent.putExtra("movieID", mMovieAdapter.getMovieData().get(position).getMovieID());
+
         startActivity(intent);
     }
 
@@ -86,6 +92,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
 
     private void populateUI(int display){
         mViewModel.getPopularMovies().removeObservers(MainActivity.this);
