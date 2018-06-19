@@ -66,8 +66,6 @@ public class PopularMoviesRepo {
 
     private synchronized void initializeReviewsAndTrailers(String movieID){
         if(!mTrailersAndReviewsInitilized){
-            Log.d("DDDDDDDDDDDDDD", "repo CreatedR");
-
             mMovieNetworkDataSource.clearReviewsAndTrailers();
         mMovieNetworkDataSource.fetchTrailersAndReviews(movieID);
         mTrailersAndReviewsInitilized = true;
@@ -138,6 +136,11 @@ public class PopularMoviesRepo {
 
     public LiveData<FavoritesEntry> getFavorite(String moviePK) {
       return   mFavoriteDao.getFavoriteById(moviePK);
+    }
+
+
+    public LiveData<List<FavoritesEntry>> getFavoritesList() {
+        return mFavoriteDao.loadAllFavorites();
     }
 }
 

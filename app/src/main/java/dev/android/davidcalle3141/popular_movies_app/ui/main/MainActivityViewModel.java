@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModel;
 import java.util.List;
 
 import dev.android.davidcalle3141.popular_movies_app.data.PopularMoviesRepo;
+import dev.android.davidcalle3141.popular_movies_app.data.database.FavoritesEntry;
 import dev.android.davidcalle3141.popular_movies_app.data.database.MovieEntry;
 
 public class MainActivityViewModel extends ViewModel {
@@ -13,6 +14,7 @@ public class MainActivityViewModel extends ViewModel {
     private final PopularMoviesRepo mRepository;
     private final LiveData<List<MovieEntry>> mPopularMovies;
     private final LiveData<List<MovieEntry>> mRatingMovies;
+    private final LiveData<List<FavoritesEntry>> mFavorites;
     private  LiveData<List<MovieEntry>> mCurrentViewMovies;
 
 
@@ -22,8 +24,13 @@ public class MainActivityViewModel extends ViewModel {
         this.mPopularMovies = mRepository.getPopularMovies();
         this.mRatingMovies = mRepository.getRatingMovies();
         this.mCurrentViewMovies = mPopularMovies;
+        this.mFavorites = mRepository.getFavoritesList();
+
     }
 
+    public LiveData<List<FavoritesEntry>> getFavoriteList() {
+        return mFavorites;
+    }
 
 
     public LiveData<List<MovieEntry>> getPopularMovies() {
