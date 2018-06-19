@@ -3,13 +3,7 @@ package dev.android.davidcalle3141.popular_movies_app.data.database;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 @Entity
 public class MovieEntry {
@@ -109,9 +103,11 @@ public class MovieEntry {
         this.id = id;
     }
 
-    public int getId(){
+    public int getPrimaryKey(){
         return this.id;
     }
+
+    public int getId(){return this.id;}
 
     public int getSortingPopular() {
         return sortingPopular;

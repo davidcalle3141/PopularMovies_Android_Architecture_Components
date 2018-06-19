@@ -3,28 +3,27 @@ package dev.android.davidcalle3141.popular_movies_app.data.database;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
 @Entity
 public class FavoritesEntry {
     private String movie_name;
     private String image_url;
     private String plot_synopsis;
     private String release_date;
-    private double rating;
-    private String movieID;
     @PrimaryKey
-    private int id;
+    @NonNull
+    private String movieID;
 
 
 
 
     public FavoritesEntry(String movie_name, String image_url,
                           String release_date, String plot_synopsis,
-                          double rating, String movieID, int id){
-        this.id = id;
+                          @NonNull String movieID){
         this.movie_name = movie_name;
         this.image_url = image_url;
         this.release_date = release_date;
-        this.rating = rating;
         this.plot_synopsis = plot_synopsis;
         this.movieID = movieID;
 
@@ -32,6 +31,14 @@ public class FavoritesEntry {
 
     @Ignore
     public FavoritesEntry(){}
+    @Ignore
+    public FavoritesEntry(MovieEntry movieEntry) {
+        this.movie_name = movieEntry.getMovie_name();
+        this.image_url = movieEntry.getImage_url();
+        this.release_date = movieEntry.getRelease_date();
+        this.plot_synopsis = movieEntry.getPlot_synopsis();
+        this.movieID = movieEntry.getMovieID();
+    }
 
     public String getMovie_name() {
         return movie_name;
@@ -65,28 +72,15 @@ public class FavoritesEntry {
         this.release_date = release_date;
     }
 
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = Double.parseDouble(rating);
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId(){
-        return this.id;
-    }
 
 
 
+
+    @NonNull
     public String getMovieID() {
         return movieID;
     }
-    public void setMovieID(String movieID) {
+    public void setMovieID(@NonNull String movieID) {
         this.movieID = movieID;
     }
 

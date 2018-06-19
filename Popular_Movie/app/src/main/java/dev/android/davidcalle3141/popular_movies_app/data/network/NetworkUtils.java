@@ -1,7 +1,6 @@
 package dev.android.davidcalle3141.popular_movies_app.data.network;
 
 
-import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
@@ -12,13 +11,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
-import dev.android.davidcalle3141.popular_movies_app.R;
-
 import static android.content.ContentValues.TAG;
 
 public class NetworkUtils {
     //should these variables be in a resource file?
-    private static final String KEY = "a89cf665e1b42d5195f7c243d3d46a9f";
+    private static final String KEY = "";
 
     private static final String POPULAR_MOVIES_URL =
             "https://api.themoviedb.org/3/movie/popular";

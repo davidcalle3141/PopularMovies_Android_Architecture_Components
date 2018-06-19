@@ -2,7 +2,6 @@
 package dev.android.davidcalle3141.popular_movies_app.ui.detail;
 
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -13,19 +12,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import static android.content.ContentValues.TAG;
-
-
 import dev.android.davidcalle3141.popular_movies_app.R;
 import dev.android.davidcalle3141.popular_movies_app.adapters.ReviewsAdapter;
 import dev.android.davidcalle3141.popular_movies_app.adapters.TrailersAdapter;
-import dev.android.davidcalle3141.popular_movies_app.data.database.MovieEntry;
-import dev.android.davidcalle3141.popular_movies_app.ui.main.MainActivity;
 import dev.android.davidcalle3141.popular_movies_app.utilities.InjectorUtils;
 
 public class DetailActivity extends AppCompatActivity implements TrailersAdapter.TrailerAdapterOnClickHandler {
@@ -36,6 +32,8 @@ public class DetailActivity extends AppCompatActivity implements TrailersAdapter
     private RecyclerView.LayoutManager mLayoutManager;
     private ReviewsAdapter mReviewAdapter;
     private TrailersAdapter mTrailerAdapter;
+    private static Boolean saved;
+
 
 
 
@@ -66,52 +64,91 @@ public class DetailActivity extends AppCompatActivity implements TrailersAdapter
         DetailViewModelFactory factory = InjectorUtils.provideDetailActivityViewModelFactory(this.getApplicationContext(), intent.getStringExtra("movieID"));
         mViewModel = ViewModelProviders.of(this, factory).get(DetailActivityViewModel.class);
 
-        mViewModel.getmReviews().observe(this,
-                reviews ->{
-            int c = 0;
-            if(reviews!= null){
-            mReviewAdapter.setMovieReviews(reviews);
-            mReviewAdapter.notifyDataSetChanged();
-                }});
-        mViewModel.getmTrailers().observe(this,
-                trailers ->{
-            if(trailers!= null){
-            mTrailerAdapter.setMovieTrailers(trailers);
-            mTrailerAdapter.notifyDataSetChanged();
-                }});
 
-        populateUI(intent, mContext);
+
+        populateRV();
+        populateUI(mContext);
 
 
 
 
 
     }
+    private void populateRV(){
+        mViewModel.getmReviews().observe(this,
+                reviews ->{
+                    if(reviews!= null){
+                        mReviewAdapter.setMovieReviews(reviews);
+                        mReviewAdapter.notifyDataSetChanged();
+                    }});
+        mViewModel.getmTrailers().observe(this,
+                trailers ->{
+                    if(trailers!= null){
+                        mTrailerAdapter.setMovieTrailers(trailers);
+                        mTrailerAdapter.notifyDataSetChanged();
+                    }});
 
-    private void populateUI(Intent intent, Context mContext) {
+    }
+
+    private void populateUI(Context mContext) {
 
         TextView movieName = findViewById(R.id.detail_movie_title);
         ImageView moviePoster = findViewById(R.id.poster_thumbnail);
         TextView movieReleaseDate = findViewById(R.id.movie_release_date);
         TextView movieRating = findViewById(R.id.movie_rating);
         TextView moviePlot= findViewById(R.id.movie_synopsis);
+        Button favoriteButton = findViewById(R.id.favorite_button);
 
-        Picasso.with(mContext).load(intent.getStringExtra("moviePoster")).into(moviePoster);
+        mViewModel.getMovieEntry().observe(this,
+                movie ->{
 
-        movieName.setText(intent.getStringExtra("movieName"));
-        movieReleaseDate.setText(intent.getStringExtra("movieReleaseDate"));
-        movieRating.setText(String.valueOf(intent.getDoubleExtra("movieRating", -1)));
-        moviePlot.setText(intent.getStringExtra("moviePlot"));
+                    assert movie != null;
+                    Picasso.with(mContext).load(movie.getImage_url()).into(moviePoster);
 
+                    movieName.setText(movie.getMovie_name());
+                    movieReleaseDate.setText(movie.getRelease_date());
+                    movieRating.setText(String.valueOf(movie.getRating()));
+                    moviePlot.setText(movie.getPlot_synopsis());
+
+                });
+
+
+
+        mViewModel.getmFavoriteEntry().observe(this,
+                isFavorite ->{
+            if(isFavorite!=null) {
+                    favoriteButton.setText(R.string.saved);
+                    mViewModel.setIsFavorite(true);
+                } else {favoriteButton.setText(R.string.save);
+                    mViewModel.setIsFavorite(false);}
+                });
+
+        favoriteButton.setOnClickListener(new FavoriteButtonClick());
 
 
 
     }
 
-
+    ///////////////////////////////////////////////////////////////////
+    //trailers onitemclick
     @Override
     public void onItemClick(int position) {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://"+ mTrailerAdapter.getYoutubeLink(position))));
-
     }
+    //////////////////////////////////////////////////////////////////
+
+    class FavoriteButtonClick implements View.OnClickListener{
+        @Override
+        public void onClick(View v){
+            Log.d("CLICKKR", "been clicked");
+
+
+            if(mViewModel.getIsFavoriteBoolean()){
+                mViewModel.removeFavorite();}
+            else { mViewModel.addFavorite();}
+
+
+        }
+    }
+
 }

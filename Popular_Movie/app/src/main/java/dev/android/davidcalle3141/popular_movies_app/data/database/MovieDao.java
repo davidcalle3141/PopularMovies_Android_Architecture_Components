@@ -22,11 +22,12 @@ public interface MovieDao {
     @Query("SELECT * FROM MovieEntry WHERE sortingRating = 1 ORDER BY rating DESC")
     LiveData<List<MovieEntry>> loadRatingSortedMovies();
 
-    @Query("SELECT * FROM MovieEntry WHERE id = :movieID")
-    LiveData<MovieEntry> loadMovieEntry(int movieID);
+    @Query("SELECT * FROM MovieEntry WHERE movieID = :movieID")
+    LiveData<MovieEntry> loadMovieEntry(String movieID);
 
-    @Insert
-    void insertFavorite(FavoritesEntry newFavorite);
+    @Query("DELETE FROM MovieEntry")
+    void deleteMovies();
+
 
     @Insert
     void bulkInsert(List<MovieEntry> newMoviesFromNetwork);
@@ -37,13 +38,6 @@ public interface MovieDao {
 
     @Delete
     void deleteMovie(MovieEntry movie);
-
-    @Delete
-    void deleteFavorite(FavoritesEntry favoritesEntry);
-
-
-    @Query("DELETE  FROM MovieEntry")
-    void deleteMovies();
 
 
 }

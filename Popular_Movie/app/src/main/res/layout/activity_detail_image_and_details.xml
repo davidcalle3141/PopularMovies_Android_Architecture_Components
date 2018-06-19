@@ -49,10 +49,10 @@
             android:textSize="20sp"
             android:paddingBottom="5dp"/>
         <Button
+            android:id="@+id/favorite_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textAlignment="center"
-            android:text="Favorite"
             android:background="@color/colorAccent"/>
 
         

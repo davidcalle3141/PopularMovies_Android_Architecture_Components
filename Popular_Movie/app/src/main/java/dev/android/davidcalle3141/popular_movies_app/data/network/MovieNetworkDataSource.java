@@ -1,10 +1,10 @@
 package dev.android.davidcalle3141.popular_movies_app.data.network;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +15,7 @@ import dev.android.davidcalle3141.popular_movies_app.data.database.MovieEntry;
 public class MovieNetworkDataSource {
 
     private static final Object LOCK = new Object();
+    @SuppressLint("StaticFieldLeak")
     private static  MovieNetworkDataSource sInstance;
     private final Context mContext;
 
@@ -56,13 +57,12 @@ public class MovieNetworkDataSource {
                 String jsonMoviePopularSortData = NetworkUtils.getResponseFromHttpUrl(NetworkUtils.popularMoviesUrl("en_Us", "840"));
 
                 MovieResponse response = new MovieJsonUtils().parseMovieJson(jsonMoviePopularSortData, true ,false);
-                assert response != null;
-                //TODO handle null response cases
+                if(response!= null){
                 response.AddToMovieResponse(new MovieJsonUtils().parseMovieJson(jsonMovieRatingSortData,false,true).getMovieEntries());
 
 
                 mDownloadedMovieData.postValue(response.getMovieEntries());
-                Log.d("DDDDDDDDDDDDDD", "stuff added");
+                }
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -111,5 +111,7 @@ public class MovieNetworkDataSource {
         mDownloadedReviewsData = new MutableLiveData<>();
         mDownloadedTrailerData = new MutableLiveData<>();
     }
+
+
 }
 
