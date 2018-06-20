@@ -23,7 +23,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     private final MovieAdapterOnClickHandler mClickHandler;
 
     public void addMoviesList(List<MovieEntry> mainMoviesEntries) {
-        movies = mainMoviesEntries;
+        movies.clear();
+        movies.addAll(mainMoviesEntries);
 
     }
 

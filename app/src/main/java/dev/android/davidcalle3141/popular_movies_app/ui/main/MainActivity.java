@@ -74,15 +74,18 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         int id = item.getItemId();
         if (id == R.id.action_settings_favorites) {
             populateUI(2);
+            mLayoutManager.smoothScrollToPosition(mRecyclerView, null, 0);
             return true;
         }
 
         if(id == R.id.action_settings_popular){
             populateUI(1);
+            mLayoutManager.smoothScrollToPosition(mRecyclerView, null, 0);
             return true;
         }
         if(id == R.id.action_settings_sortRating){
             populateUI(0);
+            mLayoutManager.smoothScrollToPosition(mRecyclerView, null, 0);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -102,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         switch (display){
             case 2:
-                mLayoutManager.smoothScrollToPosition(mRecyclerView, null, 0);
                 mViewModel.getFavoriteList().observe(MainActivity.this,
                         favoritesEntries -> {
                             if (favoritesEntries != null) {
@@ -118,7 +120,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                         });
                 break;
             case 1:
-                mLayoutManager.smoothScrollToPosition(mRecyclerView, null, 0);
                 mViewModel.getPopularMovies().observe(MainActivity.this,
                         movieEntry -> {
                            if(movieEntry != null){
@@ -128,7 +129,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                         });
                 break;
             case 0:
-                mLayoutManager.smoothScrollToPosition(mRecyclerView, null, 0);
                 mViewModel.getRatingMovies().observe(MainActivity.this,
                         movieEntry -> {
                             if(movieEntry != null){
