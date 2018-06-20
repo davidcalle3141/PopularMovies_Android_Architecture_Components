@@ -14,7 +14,7 @@ import java.util.Scanner;
 import static android.content.ContentValues.TAG;
 
 public class NetworkUtils {
-    private static final String KEY = "a89cf665e1b42d5195f7c243d3d46a9f";
+    private static final String KEY = "";
 
     private static final String POPULAR_MOVIES_URL =
             "https://api.themoviedb.org/3/movie/popular";
