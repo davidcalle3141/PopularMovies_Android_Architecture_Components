@@ -73,6 +73,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
+        if (id == R.id.action_settings_favorites) {
+            populateUI(2);
+            return true;
+        }
+
         if(id == R.id.action_settings_popular){
             populateUI(1);
             return true;
@@ -97,6 +102,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         this.onOptionsSelectedPosition = display;
 
         switch (display){
+            case 2:
+                mViewModel.getFavoriteList().observe(MainActivity.this,
+                        favoritesEntries -> {
+                            if (favoritesEntries != null) {
+                                mMovieAdapter.addFavoritesList(favoritesEntries);
+                                mMovieAdapter.notifyDataSetChanged();
+                            }
+                        });
+                break;
             case 1:
                 mViewModel.getPopularMovies().observe(MainActivity.this,
                         movieEntry -> {

@@ -59,6 +59,15 @@ public class MovieEntry {
     @Ignore
     public MovieEntry(){}
 
+    @Ignore
+    public MovieEntry(FavoritesEntry favoritesEntry) {
+        this.movieID = favoritesEntry.getMovieID();
+        this.plot_synopsis = favoritesEntry.getPlot_synopsis();
+        this.release_date = favoritesEntry.getRelease_date();
+        this.image_url = favoritesEntry.getImage_url();
+        this.movie_name = favoritesEntry.getMovie_name();
+    }
+
     public String getMovie_name() {
         return movie_name;
     }

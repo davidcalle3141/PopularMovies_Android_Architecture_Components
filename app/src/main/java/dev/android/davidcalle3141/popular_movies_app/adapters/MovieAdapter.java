@@ -16,21 +16,30 @@ import java.util.List;
 import dev.android.davidcalle3141.popular_movies_app.R;
 import dev.android.davidcalle3141.popular_movies_app.data.database.FavoritesEntry;
 import dev.android.davidcalle3141.popular_movies_app.data.database.MovieEntry;
-import dev.android.davidcalle3141.popular_movies_app.data.network.MovieJsonUtils;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
-    private ArrayList movies;
+    private List<MovieEntry> movies;
     private Context context;
     private String JsonMovieString;
     private final MovieAdapterOnClickHandler mClickHandler;
 
     public void addMoviesList(List<MovieEntry> mainMoviesEntries) {
-        movies = new ArrayList<>(mainMoviesEntries);
+        movies = mainMoviesEntries;
 
     }
 
     public void addFavoritesList(List<FavoritesEntry> favoritesEntries) {
-        movies = new ArrayList<>(favoritesEntries);
+        List<MovieEntry> movieEntries = new ArrayList<>();
+        for (FavoritesEntry Entry : favoritesEntries) {
+            MovieEntry movieEntry = new MovieEntry(Entry);
+            movieEntries.add(movieEntry);
+        }
+
+
+        movies = movieEntries;
+
+
+
     }
 
     public interface MovieAdapterOnClickHandler {
