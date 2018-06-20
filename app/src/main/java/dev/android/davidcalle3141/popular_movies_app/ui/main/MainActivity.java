@@ -10,8 +10,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dev.android.davidcalle3141.popular_movies_app.R;
 import dev.android.davidcalle3141.popular_movies_app.adapters.MovieAdapter;
+import dev.android.davidcalle3141.popular_movies_app.data.database.FavoritesEntry;
+import dev.android.davidcalle3141.popular_movies_app.data.database.MovieEntry;
 import dev.android.davidcalle3141.popular_movies_app.ui.detail.DetailActivity;
 import dev.android.davidcalle3141.popular_movies_app.utilities.InjectorUtils;
 
@@ -21,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private MovieAdapter mMovieAdapter;
     private RecyclerView mRecyclerView;
     private MainActivityViewModel mViewModel;
-    private int onOptionsSelectedPosition =1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,13 +44,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         mViewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel.class);
 
-        mViewModel.getCurrentViewMovies().observe(MainActivity.this,
-                movieEntry -> {
-                    if(movieEntry != null){
-                        mMovieAdapter.addMoviesList(movieEntry);
-                        mMovieAdapter.notifyDataSetChanged();}
 
-                });
+        populateUI(mViewModel.getCurrentViewMovies());
 
 
     }
@@ -99,19 +98,27 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private void populateUI(int display){
         mViewModel.getPopularMovies().removeObservers(MainActivity.this);
         mViewModel.getRatingMovies().removeObservers(MainActivity.this);
-        this.onOptionsSelectedPosition = display;
+        mViewModel.getFavoriteList().removeObservers(MainActivity.this);
 
         switch (display){
             case 2:
+                mLayoutManager.smoothScrollToPosition(mRecyclerView, null, 0);
                 mViewModel.getFavoriteList().observe(MainActivity.this,
                         favoritesEntries -> {
                             if (favoritesEntries != null) {
-                                mMovieAdapter.addFavoritesList(favoritesEntries);
+                                List<MovieEntry> movieEntries = new ArrayList<>();
+                                for (FavoritesEntry Entry : favoritesEntries) {
+                                    MovieEntry movieEntry = new MovieEntry(Entry);
+                                    movieEntries.add(movieEntry);
+                                }
+
+                                mMovieAdapter.addMoviesList(movieEntries);
                                 mMovieAdapter.notifyDataSetChanged();
                             }
                         });
                 break;
             case 1:
+                mLayoutManager.smoothScrollToPosition(mRecyclerView, null, 0);
                 mViewModel.getPopularMovies().observe(MainActivity.this,
                         movieEntry -> {
                            if(movieEntry != null){
@@ -121,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                         });
                 break;
             case 0:
+                mLayoutManager.smoothScrollToPosition(mRecyclerView, null, 0);
                 mViewModel.getRatingMovies().observe(MainActivity.this,
                         movieEntry -> {
                             if(movieEntry != null){

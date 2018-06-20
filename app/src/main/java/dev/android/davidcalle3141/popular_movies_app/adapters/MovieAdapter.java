@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.android.davidcalle3141.popular_movies_app.R;
-import dev.android.davidcalle3141.popular_movies_app.data.database.FavoritesEntry;
 import dev.android.davidcalle3141.popular_movies_app.data.database.MovieEntry;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
@@ -28,19 +27,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     }
 
-    public void addFavoritesList(List<FavoritesEntry> favoritesEntries) {
-        List<MovieEntry> movieEntries = new ArrayList<>();
-        for (FavoritesEntry Entry : favoritesEntries) {
-            MovieEntry movieEntry = new MovieEntry(Entry);
-            movieEntries.add(movieEntry);
-        }
 
-
-        movies = movieEntries;
-
-
-
-    }
 
     public interface MovieAdapterOnClickHandler {
         void onItemClick(int position);}
@@ -75,7 +62,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-
 
         Picasso.with(context).load( movies.get(i).getImage_url()).into(viewHolder.img_movie);
 

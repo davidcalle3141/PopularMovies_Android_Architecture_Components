@@ -15,7 +15,8 @@ public class MainActivityViewModel extends ViewModel {
     private final LiveData<List<MovieEntry>> mPopularMovies;
     private final LiveData<List<MovieEntry>> mRatingMovies;
     private final LiveData<List<FavoritesEntry>> mFavorites;
-    private  LiveData<List<MovieEntry>> mCurrentViewMovies;
+    private int mCurrentViewMovies;
+
 
 
 
@@ -23,29 +24,31 @@ public class MainActivityViewModel extends ViewModel {
         this.mRepository = Repository;
         this.mPopularMovies = mRepository.getPopularMovies();
         this.mRatingMovies = mRepository.getRatingMovies();
-        this.mCurrentViewMovies = mPopularMovies;
+        this.mCurrentViewMovies = 1;
         this.mFavorites = mRepository.getFavoritesList();
 
     }
 
     public LiveData<List<FavoritesEntry>> getFavoriteList() {
+        mCurrentViewMovies = 2;
         return mFavorites;
     }
 
 
     public LiveData<List<MovieEntry>> getPopularMovies() {
-        mCurrentViewMovies = mPopularMovies;
+        mCurrentViewMovies = 1;
         return mPopularMovies;
     }
 
     public LiveData<List<MovieEntry>> getRatingMovies() {
-        mCurrentViewMovies = mRatingMovies;
+        mCurrentViewMovies = 0;
         return mRatingMovies;
     }
 
 
-    public LiveData<List<MovieEntry>> getCurrentViewMovies() {
+    public int getCurrentViewMovies() {
         return mCurrentViewMovies;
     }
+
 
 }
