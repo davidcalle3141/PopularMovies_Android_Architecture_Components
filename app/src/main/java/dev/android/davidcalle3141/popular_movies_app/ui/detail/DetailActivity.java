@@ -5,6 +5,8 @@ package dev.android.davidcalle3141.popular_movies_app.ui.detail;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import dev.android.davidcalle3141.popular_movies_app.R;
 import dev.android.davidcalle3141.popular_movies_app.adapters.ReviewsAdapter;
@@ -133,7 +137,20 @@ public class DetailActivity extends AppCompatActivity implements TrailersAdapter
     //trailers onitemclick
     @Override
     public void onItemClick(int position) {
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://"+ mTrailerAdapter.getYoutubeLink(position))));
+        Intent sendIntend = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://" + mTrailerAdapter.getYoutubeLink(position)));
+        try {
+            PackageManager packageManager = getPackageManager();
+            List<ResolveInfo> activities = packageManager.queryIntentActivities(sendIntend,
+                    PackageManager.MATCH_DEFAULT_ONLY);
+            boolean isIntentSafe = activities.size() > 0;
+
+
+            if (isIntentSafe) {
+                startActivity(sendIntend);
+            }
+        } catch (Exception e) {
+            //TODO handle no app to open intent available
+        }
     }
     //////////////////////////////////////////////////////////////////
 
